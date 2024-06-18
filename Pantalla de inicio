@@ -1,0 +1,46 @@
+// Definición de atributos
+private int estado;
+private PImage imgPressAnyKey;
+private PImage imgLoading;
+private PImage imgStart;
+
+public void settings() {
+  size(800, 600); // Tamaño de la ventana
+}
+
+public void setup() {
+  estado = 0; // Estado inicial
+  imgPressAnyKey = loadImage("press_any_key.png"); // Carga la imagen "press_any_key.png"
+  imgLoading = loadImage("loading.png"); // Carga la imagen "loading.png"
+  imgStart = loadImage("start.png"); // Carga la imagen "start.png"
+}
+
+public void draw() {
+  background(0); // Fondo negro
+
+  switch (estado) {
+    case 0: // Estado de "Press any key"
+      image(imgPressAnyKey, width/2 - imgPressAnyKey.width/2, height/2 - imgPressAnyKey.height/2);
+      break;
+    
+    case 1: // Estado de "Loading"
+      image(imgLoading, width/2 - imgLoading.width/2, height/2 - imgLoading.height/2);
+      break;
+    
+    case 2: // Estado de "Start"
+      image(imgStart, width/2 - imgStart.width/2, height/2 - imgStart.height/2);
+      break;
+  }
+}
+
+public void keyPressed() {
+  if (estado == 0) {
+    estado = 1; // Cambia al estado de "Loading" al presionar cualquier tecla
+  } else if (estado == 1) {
+    estado = 2; // Cambia al estado de "Start" al presionar cualquier tecla durante "Loading"
+  } else if (estado == 2) {
+    // Inicia el juego, por ejemplo:
+    // estado = MaquinaEstados.JUGANDO;
+    // Iniciar juego aquí
+  }
+}

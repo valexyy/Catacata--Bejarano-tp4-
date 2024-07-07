@@ -1,18 +1,20 @@
-Habitacion habitacion;
-Pared[] paredes;
+private Habitacion habitacion;
+private Pared[] paredes;
+
 
 public void setup(){
-  size(700,600); //tamaño de la ventana
-  habitacion= new Habitacion(new PVector(100, 100));
-  //pared=new Pared(new PVector(180,170), 20, 90);
-}
+  size(700, 600);//tamaño de la ventana
+  habitacion = new Habitacion(new PVector(100, 100));// creo el objeto habitacion
+ 
+  }
+  
 
 public void draw(){
-  background(#E37C7C);
-  habitacion.dibujar();
+  background(#FA9A9A);//fondo
+  habitacion.dibujar();//dibujo la habitacion en la ventana
   for(Pared pared: paredes){
     if(pared!=null){
-      pared.display();
+    pared.display();
     }
   }
 }

@@ -1,6 +1,6 @@
 private class Habitacion{
   private PVector posicion;
-  private int numParedes=30;
+  private int numParedes=25;
   private int type;
   
   public Habitacion(PVector posicion){
@@ -19,13 +19,26 @@ private class Habitacion{
         float alto = random(100, 90);
         boolean horizontal=random(1)>0.5;
         
-      }while();
+        if(horizontal){
+          nuevaPared= new Pared(pos, ancho, 20);
+        } else{
+          nuevaPared= new Pared(pos, 20, alto);
+        }
+        for(Pared pared: paredes){
+          if(pared != null&& nuevaPared.seSuperpone(pared)){
+            overlapping=true;
+            break;
+          }
+        }
+      }while(overlapping);
+      
+      paredes[i]= nuevaPared;
     }
   }
   
   public void dibujar(){
     fill(#F5ADAD);
-    rect(posicion.x, posicion.y, 508, 450 );
+    rect(60, 80, 580, 450 );
   }
   
 }

@@ -43,8 +43,8 @@ class Personaje{
       }
     }  
      // Limitar el movimiento dentro de la habitación
-    if (nuevaPosicion.x < habitacion.posicion.x || nuevaPosicion.x + 60 > habitacion.posicion.x + 500 ||
-        nuevaPosicion.y < habitacion.posicion.y || nuevaPosicion.y + 60 > habitacion.posicion.y + 400) {
+    if (nuevaPosicion.x < habitacion.posicion.x || nuevaPosicion.x + 60 > habitacion.posicion.x + 580 ||
+        nuevaPosicion.y < habitacion.posicion.y || nuevaPosicion.y + 80 > habitacion.posicion.y + 430) {
       return;
     }
     
@@ -74,10 +74,10 @@ class Personaje{
     return false;
   }
   
-  /*public void verificarColisiones(Pared[] paredes){
+  public void verificarColisiones(Pared[] paredes){
     for(Pared pared: paredes){
       if(pared !=null && pared.colisionaCon(this.posicion,60)){  
       }
     }
-  }*/
+  }
 }

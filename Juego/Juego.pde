@@ -51,6 +51,7 @@ for (int i = 0; i < pistas.length; i++) {
 public void draw(){
   background(#FA9A9A);//fondo
   habitacion.dibujar();//dibujo la habitacion en la ventana
+  habitacion.mostrarContadorPistas();
   
   for(Pared pared: paredes){
     if(pared!=null){

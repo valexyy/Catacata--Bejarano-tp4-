@@ -8,7 +8,7 @@ class Personaje{
   }
   
   public void display(){
-    image(prota, posicion.x, posicion.y, 40, 40);
+    image(prota, posicion.x, posicion.y, 60, 60);
   }
   /*mueve el atibuto posicion una cantidad determinado por velocidad
   direccion indica para donde se ira (0 arriba, 1 derecha, 2 abajo, 3 izq)*/

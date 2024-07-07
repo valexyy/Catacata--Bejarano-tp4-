@@ -11,10 +11,15 @@ class Personaje{
     image(prota, posicion.x, posicion.y, 40, 40);
   }
   
-  public void mover(){
+  public void mover(int direccion){
+    this.direccion= direccion;
   }
   
   public void setPosicion(PVector posicion){
     this.posicion=posicion;
+  }
+  
+  public void setVelocidad(PVector velocidad){
+    this.velocidad=velocidad;
   }
 }

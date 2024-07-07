@@ -37,7 +37,7 @@ this.leftPressed=leftPressed;
 public void verificarRecoleccion(){
   PVector posicionPersonaje= personaje.getPosicion();
   
-  for(Pista pista: pista){
+  for(Pista pista: pistas){
     if(pista != null && !pista.isRecolectada() && pista.getPosicion().dist(posicionPersonaje)<50){
       pista.recolectar();
       pistasRecolectadas++;
@@ -45,9 +45,10 @@ public void verificarRecoleccion(){
   }
 }
 
-public void mostrarContadorPistas(){
-  fill(0);
-  textSize(17);
-  text("Pistas recolectadas" + pistasRecolectadas, 10, 20);
+public PVector generarPosicionAleatoria(){
+  
+  float x = random(habitacion.posicion.x, habitacion.posicion.x + 500 - 40); // Ajusta el tamaño de la habitación y de las pistas
+  float y = random(habitacion.posicion.y, habitacion.posicion.y + 400 - 40);
+  return new PVector(x, y);  
 }
 }

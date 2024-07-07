@@ -15,11 +15,6 @@ public void setup(){
   personaje.setVelocidad(new PVector(2,2));
   joyPad= new JoyPad();
   
-  //Inicializo pistas
-  pistas = new Pista[3];
-  pistas[0]= new Pista(new PVector(200, 200), "oso.png");
-  pistas[1]= new Pista(new PVector(200, 200), "diario.png");
-  pistas[2]= new Pista(new PVector(200, 200), "foto.png");  
   }
   
 

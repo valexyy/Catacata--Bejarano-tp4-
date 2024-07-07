@@ -17,7 +17,7 @@ class Personaje{
   }
   
   public void display(){
-    image(frames[direccion], posicion.x, posicion.y, 60, 60);
+    image(frames[direccion], posicion.x, posicion.y, 40, 40);
   }
   /*mueve el atibuto posicion una cantidad determinado por velocidad
   direccion indica para donde se ira (0 arriba, 1 derecha, 2 abajo, 3 izq)*/
@@ -41,6 +41,11 @@ class Personaje{
         nuevaPosicion.x-=this.velocidad.x;
         break;
       }
+    }  
+     // Limitar el movimiento dentro de la habitación
+    if (nuevaPosicion.x < habitacion.posicion.x || nuevaPosicion.x + 60 > habitacion.posicion.x + 500 ||
+        nuevaPosicion.y < habitacion.posicion.y || nuevaPosicion.y + 60 > habitacion.posicion.y + 400) {
+      return;
     }
     
     if(!verificarColisiones(nuevaPosicion)){
@@ -56,6 +61,10 @@ class Personaje{
     this.velocidad=velocidad;
   }
   
+  public PVector getPosicion(){
+    return this.posicion;
+  }
+  
   public boolean verificarColisiones(PVector nuevaPosicion){
     for(Pared pared: paredes){
       if(pared != null && pared.colisionaCon(nuevaPosicion, 60)){
@@ -65,10 +74,10 @@ class Personaje{
     return false;
   }
   
-  public void verificarColisiones(Pared[] paredes){
+  /*public void verificarColisiones(Pared[] paredes){
     for(Pared pared: paredes){
       if(pared !=null && pared.colisionaCon(this.posicion,60)){  
       }
     }
-  }
+  }*/
 }

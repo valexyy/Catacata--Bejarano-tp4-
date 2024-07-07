@@ -2,6 +2,8 @@ private Habitacion habitacion;
 private Pared[] paredes;
 private Personaje personaje;
 private JoyPad joyPad;
+private Pista[] pistas;
+private int pistasRecolectadas=0;
 
 public void settings(){
    size(700, 600);//tamaño de la ventana
@@ -12,6 +14,12 @@ public void setup(){
   personaje.setPosicion(new PVector(150,150));
   personaje.setVelocidad(new PVector(2,2));
   joyPad= new JoyPad();
+  
+  //Inicializo pistas
+  pistas = new Pista[3];
+  pistas[0]= new Pista(new PVector(200, 200), "oso.png");
+  pistas[1]= new Pista(new PVector(200, 200), "diario.png");
+  pistas[2]= new Pista(new PVector(200, 200), "foto.png");  
   }
   
 
@@ -25,6 +33,12 @@ public void draw(){
     }
   } 
     personaje.display();
+    
+    for (Pista pista : pistas) {
+    if (pista != null && !pista.isRecolectada()) {
+      pista.display();
+    }
+  }
     
     if(joyPad.isUpPressed()){
    personaje.mover(0);

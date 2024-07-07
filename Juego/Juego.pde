@@ -14,6 +14,36 @@ public void setup(){
   personaje.setPosicion(new PVector(150,150));
   personaje.setVelocidad(new PVector(2,2));
   joyPad= new JoyPad();
+  //pistas = new Pista(new PVector(30,30), String(.png));
+  
+  pistas = new Pista[4];
+for (int i = 0; i < pistas.length; i++) {
+  PVector posicionAleatoria;
+  boolean overlapping;
+  
+  do {
+    overlapping = false;
+    posicionAleatoria = joyPad.generarPosicionAleatoria();
+    
+    // Verificar si se superpone con alguna pared
+    for (Pared pared : paredes) {
+      if (pared != null && pared.colisionaCon(posicionAleatoria, 50)) {
+        overlapping = true;
+        break;
+      }
+    }
+    
+    // Verificar si se superpone con alguna pista ya existente
+    for (Pista pista : pistas) {
+      if (pista != null && pista.getPosicion().dist(posicionAleatoria) < 50) {
+        overlapping = true;
+        break;
+      }
+    }
+  } while (overlapping);
+  
+  pistas[i] = new Pista(posicionAleatoria, "pista" + (i + 1) + ".png");
+}
   
   }
   

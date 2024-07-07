@@ -1,10 +1,10 @@
 Habitacion habitacion;
-Pared pared;
+Pared[] paredes;
 
 public void setup(){
   size(700,600); //tamaño de la ventana
   habitacion= new Habitacion(new PVector(100, 70));
-  pared=new Pared(new PVector(180,170), 20, 90);
+  //pared=new Pared(new PVector(180,170), 20, 90);
 }
 
 public void draw(){

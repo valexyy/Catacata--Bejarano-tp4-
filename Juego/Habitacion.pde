@@ -1,6 +1,6 @@
 class Habitacion{
   PVector posicion;
-  int numParedes = 30;
+  int numParedes = 25;
   int type;
   
   public Habitacion(PVector posicion){

@@ -24,4 +24,8 @@ class Pared{
              posicion.y > otra.posicion.y + otra.alto);
   }
   
-}
+  boolean colisionaCon(PVector pos, float tam){ 
+    return !(pos.x + tam < posicion.x || pos.x > posicion.x + ancho || pos.y + tam < posicion.y || pos.y > posicion.y + alto);
+  } 
+  }
+  

@@ -3,11 +3,13 @@ private Pared[] paredes;
 private Personaje personaje;
 private JoyPad joyPad;
 
+public void settings(){
+   size(700, 600);//tamaño de la ventana
+}
 public void setup(){
-  size(700, 600);//tamaño de la ventana
   habitacion = new Habitacion(new PVector(100, 100));// creo el objeto habitacion
   personaje= new Personaje();
-  personaje.setPosicion(new PVector(50,100));
+  personaje.setPosicion(new PVector(150,150));
   personaje.setVelocidad(new PVector(2,2));
   joyPad= new JoyPad();
   }
@@ -16,10 +18,12 @@ public void setup(){
 public void draw(){
   background(#FA9A9A);//fondo
   habitacion.dibujar();//dibujo la habitacion en la ventana
+  
   for(Pared pared: paredes){
     if(pared!=null){
     pared.display();
     }
+  } 
     personaje.display();
     
     if(joyPad.isUpPressed()){
@@ -36,11 +40,11 @@ public void draw(){
 
   if(joyPad.isLeftPressed()){
   personaje.mover(3);
-}
   }
 }
 
-public void keyReleased(){
+
+public void keyPressed(){
   if(key=='w'||keyCode==UP){
 joyPad.setUpPressed(true);
 }
@@ -53,4 +57,19 @@ joyPad.setRightPressed(true);
  if(key=='a'||keyCode==LEFT){
 joyPad.setLeftPressed(true);
 }
+}
+
+public void keyReleased() {
+  if (key == 'w' || keyCode == UP) {
+    joyPad.setUpPressed(false);
+  }
+  if (key == 's' || keyCode == DOWN) {
+    joyPad.setDownPressed(false);
+  }
+  if (key == 'd' || keyCode == RIGHT) {
+    joyPad.setRightPressed(false);
+  }
+  if (key == 'a' || keyCode == LEFT) {
+    joyPad.setLeftPressed(false);
+  }
 }

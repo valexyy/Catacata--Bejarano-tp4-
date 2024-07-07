@@ -1,18 +1,28 @@
 class Personaje{
   private PVector posicion;
   private PVector velocidad;
-  private PImage prota;
+  private PImage[] frames;
+  private int direccion;
   
   public Personaje(){
-    prota= loadImage("personaje.png");
+    frames= new PImage[8];
+    PImage spriteSheet= loadImage("personaje.png");
+     int frameWidth = spriteSheet.width / 4;
+    int frameHeight = spriteSheet.height / 2;
+    
+    for (int i = 0; i < 4; i++) {
+      frames[i] = spriteSheet.get(i * frameWidth, 0, frameWidth, frameHeight);
+    }
+    
   }
   
   public void display(){
-    image(prota, posicion.x, posicion.y, 60, 60);
+    image(frames[direccion], posicion.x, posicion.y, 60, 60);
   }
   /*mueve el atibuto posicion una cantidad determinado por velocidad
   direccion indica para donde se ira (0 arriba, 1 derecha, 2 abajo, 3 izq)*/
   public void mover(int direccion){
+    this.direccion=direccion;
     PVector nuevaPosicion=posicion.copy();
     switch(direccion){
       case 0:{
@@ -33,7 +43,7 @@ class Personaje{
       }
     }
     
-    if(!verificarColsiones(PVector(nuevaPosicion))){
+    if(!verificarColisiones(nuevaPosicion)){
       this.posicion=nuevaPosicion;
     }
   }
@@ -55,7 +65,7 @@ class Personaje{
     return false;
   }
   
-  public void verifivarColisiones(Pared[] paredes){
+  public void verificarColisiones(Pared[] paredes){
     for(Pared pared: paredes){
       if(pared !=null && pared.colisionaCon(this.posicion,60)){  
       }

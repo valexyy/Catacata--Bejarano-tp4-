@@ -44,6 +44,8 @@ for (int i = 0; i < pistas.length; i++) {
   
   pistas[i] = new Pista(posicionAleatoria, "pista" + (i + 1) + ".png");
 }
+
+pistas.recolectar();
   
   }
   

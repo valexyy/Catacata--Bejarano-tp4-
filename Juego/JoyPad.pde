@@ -34,16 +34,7 @@ public void setLeftPressed(boolean leftPressed){
 this.leftPressed=leftPressed;
 }
 
-public void verificarRecoleccion(){
-  PVector posicionPersonaje= personaje.getPosicion();
-  
-  for(Pista pista: pistas){
-    if(pista != null && !pista.isRecolectada() && pista.getPosicion().dist(posicionPersonaje)<50){
-      pista.recolectar();
-      pistasRecolectadas++;
-    }
-  }
-}
+
 
 public PVector generarPosicionAleatoria(){
   

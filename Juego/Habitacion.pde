@@ -43,8 +43,8 @@ class Habitacion{
   
   public void mostrarContadorPistas(){
   fill(0);
-  textSize(17);
-  text("Pistas recolectadas" + pistasRecolectadas, 10, 20);
+  textSize(27);
+  text("Pistas recolectadas: " + pistasRecolectadas, 10, 20);
 }
   
 }

@@ -2,6 +2,7 @@ Habitacion habitacion;
 Laberinto laberinto;
 PImage[] sprite= new PImage[8];
 Personaje personaje;
+Linterna linterna;
 
 void setup() {
   size(800, 500);  // Tamaño de la ventana
@@ -12,14 +13,18 @@ void setup() {
   for (int i = 0; i < 8; i++) {
     personaje.sprites[i] = personaje.spriteSheet.get(0, i * (personaje.spriteSheet.height / 8), personaje.spriteSheet.width, personaje.spriteSheet.height / 8);
   }
-  //personaje = new Personaje(90, 50, 40, personaje.sprites);
-  
-}
+ 
+ linterna= new Linterna(75, 75, 0);
+} 
 
 void draw() {
   background(0);   // Fondo negro
   habitacion.dibujar();
   laberinto.dibujar();
+  fill(0, 225);
+  rect(0, 0, width, height);
+  linterna.actualizar(personaje.x+ 10, personaje.y, personaje.direccion);
+  linterna.dibujar();
   personaje.dibujar();
 }
 

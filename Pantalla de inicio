@@ -1,46 +1,63 @@
-// Definición de atributos
-private int estado;
-private PImage imgPressAnyKey;
-private PImage imgLoading;
-private PImage imgStart;
+import gifAnimation.Gif;
 
-public void settings() {
-  size(800, 600); // Tamaño de la ventana
+PImage imagen2;
+PFont miFuente;
+Gif gifImagen1;
+
+enum Estado {
+  MOSTRANDO_IMAGEN1,
+  MOSTRANDO_MENSAJE1,
+  MOSTRANDO_IMAGEN2,
+  MOSTRANDO_MENSAJE2,
+  JUEGO
 }
 
-public void setup() {
-  estado = 0; // Estado inicial
-  imgPressAnyKey = loadImage("press_any_key.png"); // Carga la imagen "press_any_key.png"
-  imgLoading = loadImage("loading.png"); // Carga la imagen "loading.png"
-  imgStart = loadImage("start.png"); // Carga la imagen "start.png"
+Estado estadoActual = Estado.MOSTRANDO_IMAGEN1;
+
+void setup() {
+  size(1000, 550);
+  gifImagen1 = new Gif(this, "imagen1.gif");
+  gifImagen1.loop(); // Para que el GIF se reproduzca en bucle
+  imagen2 = loadImage("imagen2.png");
+  miFuente = createFont("MiFuente.ttf", 32);
+  textFont(miFuente);
 }
 
-public void draw() {
-  background(0); // Fondo negro
-
-  switch (estado) {
-    case 0: // Estado de "Press any key"
-      image(imgPressAnyKey, width/2 - imgPressAnyKey.width/2, height/2 - imgPressAnyKey.height/2);
+void draw() {
+  background(0);
+  switch (estadoActual) {
+    case MOSTRANDO_IMAGEN1:
+      image(gifImagen1, 0, 0, width, height);
       break;
-    
-    case 1: // Estado de "Loading"
-      image(imgLoading, width/2 - imgLoading.width/2, height/2 - imgLoading.height/2);
+    case MOSTRANDO_MENSAJE1:
+    case MOSTRANDO_MENSAJE2:
+      mostrarMensaje("Apretar ENTER para iniciar");
       break;
-    
-    case 2: // Estado de "Start"
-      image(imgStart, width/2 - imgStart.width/2, height/2 - imgStart.height/2);
+    case MOSTRANDO_IMAGEN2:
+      image(imagen2, 0, 0, width, height);
+      break;
+    case JUEGO:
+      // Aquí empieza tu juego
       break;
   }
 }
 
-public void keyPressed() {
-  if (estado == 0) {
-    estado = 1; // Cambia al estado de "Loading" al presionar cualquier tecla
-  } else if (estado == 1) {
-    estado = 2; // Cambia al estado de "Start" al presionar cualquier tecla durante "Loading"
-  } else if (estado == 2) {
-    // Inicia el juego, por ejemplo:
-    // estado = MaquinaEstados.JUGANDO;
-    // Iniciar juego aquí
+void mostrarMensaje(String mensaje) {
+  fill(255);
+  textAlign(CENTER, CENTER);
+  text(mensaje, width / 2, height / 2);
+}
+
+void keyPressed() {
+  if (key == ENTER) {
+    if (estadoActual == Estado.MOSTRANDO_IMAGEN1) {
+      estadoActual = Estado.MOSTRANDO_MENSAJE1;
+    } else if (estadoActual == Estado.MOSTRANDO_MENSAJE1) {
+      estadoActual = Estado.MOSTRANDO_IMAGEN2;
+    } else if (estadoActual == Estado.MOSTRANDO_IMAGEN2) {
+      estadoActual = Estado.MOSTRANDO_MENSAJE2;
+    } else if (estadoActual == Estado.MOSTRANDO_MENSAJE2) {
+      estadoActual = Estado.JUEGO;
+    }
   }
 }

@@ -1,19 +1,21 @@
 Habitacion habitacion;
+Laberinto laberinto;
 Personaje personaje;
-Pista[] pistas;
 
 void setup() {
-  size(800, 600);
-  habitacion = new Habitacion(width, height);
-  personaje = new Personaje(width / 2, height / 2);
-  pistas= new Pista[4];
+  size(800, 500);  // Tamaño de la ventana
+  habitacion = new Habitacion(90, 50, 600, 400);
+  laberinto = new Laberinto(90, 50, 600, 400, color(123, 26, 94, 180));
 }
 
 void draw() {
-  background(50); // Fondo oscuro para resaltar la linterna
-  habitacion.display();
-  personaje.mover();
-  personaje.verificarColision(habitacion.laberinto);
-  personaje.verificarRecoleccion();
-  personaje.display();
+  background(0);   // Fondo negro
+  habitacion.dibujar();
+  laberinto.dibujar();
+}
+
+void keyPressed() {
+  if (key == 'r') {
+    laberinto.generarNuevoLaberinto();
+  }
 }

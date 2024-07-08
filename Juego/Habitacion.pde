@@ -1,29 +1,14 @@
 class Habitacion {
-  Laberinto laberinto;
-  Pista[] pistas;
-  int ancho, alto;
-
-  Habitacion(int ancho, int alto) {
-    this.ancho = ancho;
-    this.alto = alto;
-    laberinto = new Laberinto(ancho, alto);
-    pistas = new Pista();
-    generarPistas(10); // Generamos 10 pistas por ejemplo
-  }
-
-  void generarPistas(int cantidad) {
-    for (int i = 0; i < cantidad; i++) {
-      Pista pista = new Pista(random(width), random(height));
-      pistas.add(pista);
-    }
-  }
-
-  void display() {
-    laberinto.display();
-    for (Pista pista : pistas) {
-      pista.display();
-    }
+  int x, y, w, h;
+  
+  Habitacion(int x, int y, int w, int h) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
   }
   
-  
+  void dibujar() {
+    rect(x, y, w, h);
+  }
 }

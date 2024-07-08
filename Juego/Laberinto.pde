@@ -1,11 +1,11 @@
 class Laberinto {
-  Pared[] paredes;
+  ArrayList<Pared> paredes;
   int ancho, alto;
 
   Laberinto(int ancho, int alto) {
     this.ancho = ancho;
     this.alto = alto;
-    paredes = new Pared();
+    paredes = new ArrayList<Pared>();
     generarLaberinto();
   }
 
@@ -13,11 +13,10 @@ class Laberinto {
     // Implementación de la generación del laberinto
     // Esto es un ejemplo simple, podrías usar un algoritmo más complejo
     for (int i = 0; i < 10; i++) {
-      float x = random(ancho);
-      float y = random(alto);
+      PVector pos = new PVector(random(ancho), random(alto));
       float w = random(20, 100);
       float h = random(20, 100);
-      paredes.add(new Pared(x, y, w, h));
+      paredes.add(new Pared(pos, w, h));
     }
   }
 

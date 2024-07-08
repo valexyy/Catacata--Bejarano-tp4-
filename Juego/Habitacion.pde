@@ -13,7 +13,7 @@ class Habitacion {
 
   void generarPistas(int cantidad) {
     for (int i = 0; i < cantidad; i++) {
-      Pista pista = new Pista(random(ancho), random(alto));
+      Pista pista = new Pista(random(width), random(height));
       pistas.add(pista);
     }
   }

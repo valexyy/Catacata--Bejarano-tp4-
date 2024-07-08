@@ -3,6 +3,7 @@ class Personaje {
   float velocidad = 2;
   PImage sprite;
   Linterna linterna;
+  Pista[] pistas;
 
   Personaje(float x, float y) {
     this.x = x;
@@ -28,8 +29,8 @@ class Personaje {
 
   void verificarColision(Laberinto laberinto) {
     for (Pared pared : laberinto.paredes) {
-      if (x + sprite.width > pared.x && x < pared.x + pared.w &&
-          y + sprite.height > pared.y && y < pared.y + pared.h) {
+      if (x + sprite.width > pared.posicion.x && x < pared.posicion.x + pared.w &&
+          y + sprite.height > pared.posicion.y && y < pared.posicion.y + pared.h) {
         // Revertir el movimiento si colisiona
         if (key == 'w') y += velocidad;
         if (key == 's') y -= velocidad;
@@ -39,12 +40,16 @@ class Personaje {
     }
   }
 
-  void recolectarPistas(Pista[] pistas) {
-    for (int i = pistas.size() - 1; i >= 0; i--) {
-      Pista pista = pistas.get(i);
-      if (dist(x, y, pista.x, pista.y) < 20) { // Ajustar el rango de detección según el tamaño de la imagen
-        pistas.remove(i);
-      }
+  public void verificarRecoleccion(){
+  PVector posicionPersonaje= personaje.getPosicion();
+  
+  for(Pista pista: pistas){
+    if(pista != null && !pista.isRecolectada() && pista.getPosicion().dist(posicionPersonaje)<50){
+      pista.recolectar();
+      pistasRecolectadas++;
     }
   }
+}
+
+  
 }

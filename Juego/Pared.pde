@@ -1,14 +1,15 @@
 class Pared {
-  float x, y, w, h;
+  private PVector posicion;
+   float w, h;
 
-  public Pared(float x, float y, float w, float h) {
-    this.x = x;
-    this.y = y;
+
+  public Pared(PVector posicion, float w, float h) {
+    this.posicion = posicion;
     this.w = w;
     this.h = h;
   }
 
   void display() {
-    rect(x, y, w, h);
+    rect(posicion.x, posicion.y, w, h);
   }
 }

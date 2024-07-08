@@ -1,47 +1,56 @@
 Habitacion habitacion;
 Laberinto laberinto;
-PImage[] sprite= new PImage[8];
+PImage[][] sprite = new PImage[4][4];
 Personaje personaje;
-Linterna linterna;
 
 void setup() {
   size(800, 500);  // Tamaño de la ventana
+  personaje = new Personaje(90, 50, 40, 40, sprite);
+  personaje.spriteSheet = loadImage("personaje.png");
+  int spriteCols = 4;  // número de columnas de sprites
+  int spriteRows = 4;  // número de filas de sprites
+  int spriteWidth = personaje.spriteSheet.width / spriteCols;
+  int spriteHeight = personaje.spriteSheet.height / spriteRows;
+  
+   println("Sprite Sheet Dimensions: " + 2560 + "x" + 1440);
+  println("Sprite Dimensions: " + 2560 + "x" + 1440);
+
+  if (40 % spriteCols == 0 && 40 % spriteRows == 0) {
+    println("The sprite sheet can be divided into 4x4 sprites.");
+  } else {
+    println("The sprite sheet cannot be evenly divided into 4x4 sprites.");
+  }
+  
+  for (int i = 0; i < spriteRows; i++) {
+    for (int j = 0; j < spriteCols; j++) {
+      personaje.sprites[i][j] = personaje.spriteSheet.get(j * spriteWidth, i * spriteHeight, spriteWidth, spriteHeight);
+    }
+  }
   habitacion = new Habitacion(90, 50, 600, 400);
   laberinto = new Laberinto(90, 50, 600, 400, color(123, 26, 94, 180));
-  personaje= new Personaje(90, 50, 40, sprite);
-  personaje.spriteSheet = loadImage("personaje.png");
-  for (int i = 0; i < 8; i++) {
-    personaje.sprites[i] = personaje.spriteSheet.get(0, i * (personaje.spriteSheet.height / 8), personaje.spriteSheet.width, personaje.spriteSheet.height / 8);
-  }
- 
- linterna= new Linterna(75, 75, 0);
-} 
+}
 
 void draw() {
   background(0);   // Fondo negro
   habitacion.dibujar();
   laberinto.dibujar();
-  fill(0, 225);
-  rect(0, 0, width, height);
-  linterna.actualizar(personaje.x+ 10, personaje.y, personaje.direccion);
-  linterna.dibujar();
   personaje.dibujar();
 }
 
 void keyPressed() {
+  int dx = 0;
+  int dy = 0;
+
+  if (keyCode == UP) dy = -1;
+  if (keyCode == DOWN) dy = 1;
+  if (keyCode == LEFT) dx = -1;
+  if (keyCode == RIGHT) dx = 1;
+
+  if (dx != 0 || dy != 0) {
+    personaje.mover(dx, dy, laberinto.grid);
+  }
+
   if (key == 'r') {
     laberinto.generarNuevoLaberinto();
-    personaje.dibujar();
   }
-  
-   if (keyCode == UP) {
-    personaje.mover(0, -1, laberinto.grid);
-  } else if (keyCode == DOWN) {
-    personaje.mover(0, 1, laberinto.grid);
-  } else if (keyCode == LEFT) {
-    personaje.mover(-1, 0, laberinto.grid);
-  } else if (keyCode == RIGHT) {
-    personaje.mover(1, 0, laberinto.grid);
-  }
-  
 }

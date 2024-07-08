@@ -49,7 +49,9 @@ class Personaje {
       pistasRecolectadas++;
     }
   }
-}
-
-  
+ }
+ 
+ PVector getPosicion(){
+   return new PVector(x, y);
+ } 
 }

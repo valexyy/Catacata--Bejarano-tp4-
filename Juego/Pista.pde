@@ -1,27 +1,14 @@
-class Pista{
-  private PVector posicion;
-  private PImage imagen;
-  private boolean recolectada;
-  
-  public Pista(PVector posicion, String imagePath){
-    this.posicion=posicion;
-    this.imagen=loadImage(imagePath);
-    this.recolectada=false;
+class Pista {
+  float x, y;
+  PImage imagen;
+
+  Pista(float x, float y) {
+    this.x = x;
+    this.y = y;
+    imagen = loadImage("ruta_a_tu_imagen.png");
   }
-  
-  public void display(){
-    image(imagen, posicion.x, posicion.y, 50,50);
-  }
-  
-  public PVector getPosicion(){
-    return this.posicion;
-  }
-  
-  public boolean isRecolectada(){
-    return this.recolectada;
-  }
-  
-  public void recolectar(){
-    this.recolectada=true;
+
+  void display() {
+    image(imagen, x, y);
   }
 }

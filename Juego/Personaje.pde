@@ -1,95 +1,50 @@
-class Personaje{
-  private PVector posicion;
-  private PVector velocidad;
-  private PImage[] frames;
-  private int direccion;
-  
-  public Personaje(){
-    frames= new PImage[8];
-    PImage spriteSheet= loadImage("personaje.png");
-     int frameWidth = spriteSheet.width / 4;
-    int frameHeight = spriteSheet.height / 2;
-    
-    for (int i = 0; i < 4; i++) {
-      frames[i] = spriteSheet.get(i * frameWidth, 0, frameWidth, frameHeight);
-    }
-    
+class Personaje {
+  float x, y;
+  float velocidad = 2;
+  PImage sprite;
+  Linterna linterna;
+
+  Personaje(float x, float y) {
+    this.x = x;
+    this.y = y;
+    sprite = loadImage("personaje.png");
+    linterna = new Linterna();
   }
-  
-  public void display(){
-    image(frames[direccion], posicion.x, posicion.y, 40, 40);
-  }
-  /*mueve el atibuto posicion una cantidad determinado por velocidad
-  direccion indica para donde se ira (0 arriba, 1 derecha, 2 abajo, 3 izq)*/
-  public void mover(int direccion){
-    this.direccion=direccion;
-    PVector nuevaPosicion=posicion.copy();
-    switch(direccion){
-      case 0:{
-        nuevaPosicion.y-=this.velocidad.y;
-        break;
-      }
-       case 1:{
-        nuevaPosicion.x+=this.velocidad.x;
-        break;
-      }
-       case 2:{
-        nuevaPosicion.y+=this.velocidad.y;
-        break;
-      }
-       case 3:{
-        nuevaPosicion.x-=this.velocidad.x;
-        break;
-      }
-    }  
-     // Limitar el movimiento dentro de la habitación
-    if (nuevaPosicion.x < habitacion.posicion.x || nuevaPosicion.x + 60 > habitacion.posicion.x + 580 ||
-        nuevaPosicion.y < habitacion.posicion.y || nuevaPosicion.y + 80 > habitacion.posicion.y + 430) {
-      return;
-    }
-    
-    if(!verificarColisiones(nuevaPosicion)){
-      this.posicion=nuevaPosicion;
+
+  void mover() {
+    if (keyPressed) {
+      if (key == 'w') y -= velocidad;
+      if (key == 's') y += velocidad;
+      if (key == 'a') x -= velocidad;
+      if (key == 'd') x += velocidad;
+      // Agrega las direcciones diagonales si es necesario
     }
   }
-  
-  public void setPosicion(PVector posicion){
-    this.posicion=posicion;
+
+  void display() {
+    image(sprite, x, y);
+    linterna.display(x, y);
   }
-  
-  public void setVelocidad(PVector velocidad){
-    this.velocidad=velocidad;
-  }
-  
-  public PVector getPosicion(){
-    return this.posicion;
-  }
-  
-  public boolean verificarColisiones(PVector nuevaPosicion){
-    for(Pared pared: paredes){
-      if(pared != null && pared.colisionaCon(nuevaPosicion, 60)){
-        return true;
-      }
-    }
-    return false;
-  }
-  
-  public void verificarColisiones(Pared[] paredes){
-    for(Pared pared: paredes){
-      if(pared !=null && pared.colisionaCon(this.posicion,60)){  
+
+  void verificarColision(Laberinto laberinto) {
+    for (Pared pared : laberinto.paredes) {
+      if (x + sprite.width > pared.x && x < pared.x + pared.w &&
+          y + sprite.height > pared.y && y < pared.y + pared.h) {
+        // Revertir el movimiento si colisiona
+        if (key == 'w') y += velocidad;
+        if (key == 's') y -= velocidad;
+        if (key == 'a') x += velocidad;
+        if (key == 'd') x -= velocidad;
       }
     }
   }
-  
-  public void verificarRecoleccion(){
-  PVector posicionPersonaje= personaje.getPosicion();
-  
-  for(Pista pista: pistas){
-    if(pista != null && !pista.isRecolectada() && pista.getPosicion().dist(posicionPersonaje)<50){
-      pista.recolectar();
-      pistasRecolectadas++;
+
+  void recolectarPistas(Pista[] pistas) {
+    for (int i = pistas.size() - 1; i >= 0; i--) {
+      Pista pista = pistas.get(i);
+      if (dist(x, y, pista.x, pista.y) < 20) { // Ajustar el rango de detección según el tamaño de la imagen
+        pistas.remove(i);
+      }
     }
   }
-}
-  
 }

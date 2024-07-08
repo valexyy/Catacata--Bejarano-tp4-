@@ -5,3 +5,4 @@ class Linterna {
     ellipse(x + 20, y + 20, 100, 100); // Ajusta el tamaño y posición de la luz según sea necesario
   }
 }
+c

@@ -46,7 +46,7 @@ class Personaje {
   for(Pista pista: pistas){
     if(pista != null && !pista.isRecolectada() && pista.getPosicion().dist(posicionPersonaje)<50){
       pista.recolectar();
-      pistasRecolectadas++;
+      //pistasRecolectadas++;
     }
   }
  }

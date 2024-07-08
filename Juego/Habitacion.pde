@@ -24,4 +24,6 @@ class Habitacion {
       pista.display();
     }
   }
+  
+  
 }

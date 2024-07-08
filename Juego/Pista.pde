@@ -9,8 +9,10 @@ class Pista {
   }
 
   void display() {
+    if(!recolectada){
     image(imagen, pos.x, pos.y, 50, 50);
   }
+}
   
   public PVector getPosicion(){
     return this.pos;

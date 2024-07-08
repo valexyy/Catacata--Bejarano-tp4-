@@ -14,6 +14,6 @@ void draw() {
   habitacion.display();
   personaje.mover();
   personaje.verificarColision(habitacion.laberinto);
-  personaje.recolectarPistas(habitacion.pistas);
+  personaje.verificarRecoleccion();
   personaje.display();
 }

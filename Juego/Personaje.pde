@@ -20,14 +20,12 @@ class Personaje {
   }
 
   void dibujar() {
-    image(sprite, x, y);
+    image(sprite, x, y, 40, 40);
   }
 
   boolean recogerPista(Pista pista) {
-    if (dist(x, y, pista.x, pista.y) < 20) { // Ajustar la distancia según el tamaño del sprite
-      pistasRecogidas++;
-      return true;
-    }
-    return false;
+    // Detectar colisión basada en la superposición de las imágenes
+    return x < pista.x + pista.imagen.width && x + sprite.width > pista.x &&
+           y < pista.y + pista.imagen.height && y + sprite.height > pista.y;
   }
 }

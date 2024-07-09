@@ -9,6 +9,6 @@ class Pista {
   }
 
   void dibujar() {
-    image(imagen, x, y);
+    image(imagen, x, y, 40, 40);
   }
 }

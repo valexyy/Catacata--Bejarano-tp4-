@@ -55,6 +55,9 @@ class SoundManager {
         currentFinalMusic = final3Music;  // Reproduce en bucle la música del final 3 si no está sonando
         break;
     }
+if (currentFinalMusic != null){
+    currentFinalMusic.loop();
+    }
   }
 
   void stopAllMusic() {
@@ -65,11 +68,7 @@ class SoundManager {
     final2Music.stop(); 
     final3Music.stop(); 
   }
-  void update() {
-    if (currentFinalMusic !=null && !currentFinalMusic.isPlaying()) {
-      currentFinalMusic.jump(0);
-      currentFinalMusic.play();
-    }
+
  }
 
-}
+

@@ -29,7 +29,6 @@ class Game {
         player.move(); // Mueve al jugador
         maze.checkPistasCollection(player); // Verifica la colección de pistas por el jugador
         maze.checkMazeCompletion(player); // Verifica si el jugador ha completado el laberinto
-        soundManager.update();
         timer.update(); // Actualiza el temporizador
         
         if (estadoActual != Estado.JUEGO) {

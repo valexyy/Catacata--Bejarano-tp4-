@@ -23,21 +23,36 @@ class Game {
     soundManager.playMusicaCarga(); // Reproduce la música de carga
   }
   
-  void update() {
+ void update() {
     switch (estadoActual) {
-      case JUEGO:
-        player.move(); // Mueve al jugador
-        maze.checkPistasCollection(player); // Verifica la colección de pistas por el jugador
-        maze.checkMazeCompletion(player); // Verifica si el jugador ha completado el laberinto
-        timer.update(); // Actualiza el temporizador
-        
-        if (estadoActual != Estado.JUEGO) {
-          soundManager.stopGameMusic(); // Detiene la música del juego
-          soundManager.playFinalMusic(estadoActual); // Reproduce la música del final
-        }
-        break; 
+        case MOSTRANDO_IMAGEN1:
+        case MOSTRANDO_MENSAJE1:
+        case MOSTRANDO_IMAGEN2:
+        case MOSTRANDO_MENSAJE2:
+            // No se necesita actualización para estos estados
+            break;
+        case CINEMATICA:
+            break;
+        case JUEGO:
+            player.move(); // Mueve al jugador
+            maze.checkPistasCollection(player); // Verifica la colección de pistas por el jugador
+            maze.checkMazeCompletion(player); // Verifica si el jugador ha completado el laberinto
+            timer.update(); // Actualiza el temporizador
+            break;
+        case FINAL1:
+        case FINAL2:
+        case FINAL3:
+            if (!soundManager.currentFinalMusic.isPlaying()) { 
+                soundManager.playFinalMusic(estadoActual); // Reproduce la música del final
+            }
+            break;
+        default:
+            // Maneja cualquier estado no esperado
+            System.out.println("Estado no manejado: " + estadoActual);
+            break;
     }
-  }
+}
+
   
   void display() {
     switch (estadoActual) {
@@ -107,6 +122,5 @@ class Game {
     // Carga y muestra la imagen del final correspondiente
     PImage finalImage = parent.loadImage("final" + (estadoActual.ordinal() - Estado.FINAL1.ordinal() + 1) + ".png");
     parent.image(finalImage, 0, 0, parent.width, parent.height);
-    soundManager.playFinalMusic(estadoActual); // Reproduce la música del final correspondiente
   }
 }

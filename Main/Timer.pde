@@ -47,4 +47,11 @@ class Timer {
       parent.text("Él está cerca: " + seconds, parent.width - 10, 40); 
     }
   }
+  
+ void resetTimer() {
+  startTime = parent.millis();
+  totalTime = 80000;
+  timerRunning = true;
+}
+  
 }

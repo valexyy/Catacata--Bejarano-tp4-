@@ -88,48 +88,96 @@ class Game {
     }
   }
   
-  void handleKeyPress() {
-    switch (estadoActual) {
-      case MOSTRANDO_IMAGEN1:
-        if (parent.key == PConstants.ENTER) {
-          estadoActual = Estado.MOSTRANDO_MENSAJE1;
-        }
-        break;
-      case MOSTRANDO_MENSAJE1:
-        if (parent.key == PConstants.ENTER) {
-          estadoActual = Estado.MOSTRANDO_IMAGEN2;
-        }
-        break;
-      case MOSTRANDO_IMAGEN2:
-        if (parent.key == PConstants.ENTER) {
-          estadoActual = Estado.MOSTRANDO_MENSAJE2;
-        }
-        break;
-      case MOSTRANDO_MENSAJE2:
-        if (parent.key == PConstants.ENTER) {
-          soundManager.stopMusicaCarga();
-          soundManager.playMusicaCinematica();
-          estadoActual = Estado.CINEMATICA;
-        }
-        break;
-      case CINEMATICA:
-        cinematica.handleKeyPress();
-        if (cinematica.isFinished()) {
-          estadoActual = Estado.JUEGO;
-          soundManager.stopMusicaCinematica();
-          soundManager.playGameMusic();
-        }
-        break;
-      case JUEGO:
-        player.handleKeyPress();
-        break;
-    }
+  void startSecondIntro() {
+    showingIntro = true;
+    introScreen.start("2da Habitacion");
   }
+  
+  void handleKeyPress() {
+  switch (estadoActual) {
+    case MOSTRANDO_IMAGEN1:
+      if (parent.key == PConstants.ENTER) {
+        estadoActual = Estado.MOSTRANDO_MENSAJE1;
+      }
+      break;
+    case MOSTRANDO_MENSAJE1:
+      if (parent.key == PConstants.ENTER) {
+        estadoActual = Estado.MOSTRANDO_IMAGEN2;
+      }
+      break;
+    case MOSTRANDO_IMAGEN2:
+      if (parent.key == PConstants.ENTER) {
+        estadoActual = Estado.MOSTRANDO_MENSAJE2;
+      }
+      break;
+    case MOSTRANDO_MENSAJE2:
+      if (parent.key == PConstants.ENTER) {
+        soundManager.stopMusicaCarga();
+        soundManager.playMusicaCinematica();
+        estadoActual = Estado.CINEMATICA;
+        cinematica.reset();
+      }
+      break;
+    case CINEMATICA:
+      cinematica.handleKeyPress();
+      if (cinematica.isFinished()) {
+        soundManager.stopMusicaCinematica();
+        soundManager.playGameMusic();
+        showingIntro = true;
+        introScreen.start("1era Habitacion");
+        estadoActual = Estado.JUEGO;
+      }
+      break;
+    case JUEGO:
+      player.handleKeyPress();
+      break;
+    case FINAL1:
+    case FINAL2:
+    case FINAL3:
+      if (parent.key == PConstants.ENTER) {
+        resetGame();
+      }
+      break;
+  }
+}
+
   
   void displayFinal() {
   parent.background(0);
   PImage finalImage = parent.loadImage("final" + (estadoActual.ordinal() - Estado.FINAL1.ordinal() + 1) + ".png");
   parent.image(finalImage, 0, 0, parent.width, parent.height);
+}
+
+void resetGame() {
+  estadoActual = Estado.MOSTRANDO_IMAGEN1;
+  player.x = 50;
+  player.y = 50;
+  player.pistasRecolectadas = 0;
+  maze.currentMaze = 0;
+  maze.initializePistas();
+  timer.resetTimer();
+  soundManager.stopAllMusic();
+  soundManager.playMusicaCarga();
+  showingIntro = false;
+  
+  player = new Player(parent);
+  player.setGame(this);
+  
+  maze =new Maze(parent, this);
+  
+  cinematica = new Cinematica(parent);
+  
+  timer = new Timer (parent, this);
+  
+  loadingScreen = new LoadingScreen(parent);
+  
+  introScreen = new IntroScreen(parent);
+  
+  soundManager.stopAllMusic();
+  soundManager.playMusicaCarga();
+  
+  showingIntro = false;
+  
 }
 
 }

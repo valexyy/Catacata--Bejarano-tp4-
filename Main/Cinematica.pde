@@ -44,6 +44,10 @@ class Cinematica {
     }
   }
  
+ void reset() {
+   estadoCinematica = 0;
+   
+ }
   boolean isFinished() {
     return estadoCinematica >= textos.length;
   }

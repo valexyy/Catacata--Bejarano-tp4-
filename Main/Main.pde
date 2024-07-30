@@ -1,14 +1,13 @@
-// Importamos las librerías necesarias para la animación de GIF y el sonido
 import gifAnimation.*;
 import processing.sound.*;
-
 
 Game game;
 
 void setup() {
   size(1280,720);
-   // Inicializamos la instancia del juego
   game = new Game(this);
+  game.showingIntro = true;
+  game.introScreen.start("1era Habitación");
 }
 
 void draw() {
@@ -16,8 +15,6 @@ void draw() {
   game.display();
 }
 
-
 void keyPressed() {
-  // Manejamos la entrada del teclado
   game.handleKeyPress();
 }

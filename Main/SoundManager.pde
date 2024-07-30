@@ -42,23 +42,32 @@ class SoundManager {
     gameMusic.stop(); // Detiene la música del juego
   }
 
-  void playFinalMusic(Estado estado) {
-    stopAllMusic(); // Detiene todas las músicas
-    switch (estado) {
-      case FINAL1:
-        currentFinalMusic = final1Music; // Reproduce en bucle la música del final 1 si no está sonando
-        break;
-      case FINAL2:
-        currentFinalMusic = final2Music; // Reproduce en bucle la música del final 2 si no está sonando
-        break;
-      case FINAL3:
-        currentFinalMusic = final3Music;  // Reproduce en bucle la música del final 3 si no está sonando
-        break;
-    }
-if (currentFinalMusic != null){
-    currentFinalMusic.loop();
-    }
+void playFinalMusic(Estado estado) {
+  stopAllMusic(); // Detiene todas las músicas
+  switch (estado) {
+    case CINEMATICA:
+      // No reproducir música para la cinemática
+      currentFinalMusic = null;
+      break;
+    case FINAL1:
+      currentFinalMusic = final1Music;
+      break;
+    case FINAL2:
+      currentFinalMusic = final2Music;
+      break;
+    case FINAL3:
+      currentFinalMusic = final3Music;
+      break;
+    default:
+      // Manejar otros estados si es necesario
+      currentFinalMusic = null;
+      break;
   }
+
+  if (currentFinalMusic != null) {
+    currentFinalMusic.loop();
+  }
+}
 
   void stopAllMusic() {
     musicaCarga.stop(); 
@@ -70,4 +79,3 @@ if (currentFinalMusic != null){
   }
 
  }
-

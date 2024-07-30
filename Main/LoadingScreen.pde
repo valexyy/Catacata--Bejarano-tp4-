@@ -13,22 +13,29 @@ class LoadingScreen {
   }
   
   void display(Estado estado) {
-    parent.background(0); 
-    
-    switch (estado) {
-      case MOSTRANDO_IMAGEN1:
-        parent.image(gifImagen1, 0, 0, parent.width, parent.height); 
-        break;
-      case MOSTRANDO_MENSAJE1:
-      case MOSTRANDO_MENSAJE2:
-        mostrarMensaje("Presiona ENTER para continuar"); 
-        break;
-      case MOSTRANDO_IMAGEN2:
-        parent.image(imagen2, 0, 0, parent.width, parent.height); 
-        break;
-    }
-  }
+  parent.background(0);
   
+  switch (estado) {
+    case MOSTRANDO_IMAGEN1:
+      parent.image(gifImagen1, 0, 0, parent.width, parent.height);
+      break;
+    case MOSTRANDO_MENSAJE1:
+    case MOSTRANDO_MENSAJE2:
+      mostrarMensaje("Presiona ENTER para continuar");
+      break;
+    case MOSTRANDO_IMAGEN2:
+      parent.image(imagen2, 0, 0, parent.width, parent.height);
+      break;
+    case CINEMATICA:
+      // No se necesita mostrar nada específico para la cinemática en la pantalla de carga
+      break;
+    default:
+      // Manejar otros estados si es necesario
+      break;
+  }
+}
+
+
   void mostrarMensaje(String mensaje) {
     parent.fill(255); 
     parent.textFont(miFuente); // Establece la fuente personalizada

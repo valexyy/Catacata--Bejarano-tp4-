@@ -3,9 +3,15 @@ class Maze {
   Game game;
   int[][] maze;
   int cellSize;
-  ArrayList<PVector> pistas;
+  ArrayList<Pista> pistas;
   PImage[] pistasImg;
   int currentMaze;
+  color wallColor1, floorColor1;
+  color wallColor2, floorColor2;
+//Constructor de la clase Maze
+//Inicializa el laberinto y las pistas
+//@param parent La instancia de PApplet principal
+//@param game La instancia del juego actual 
 
   Maze(PApplet parent, Game game) {
     this.parent = parent;
@@ -24,12 +30,19 @@ class Maze {
       {1, 1, 0, 1, 0, 0, 0, 1, 0, 1},
       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
-    pistas = new ArrayList<PVector>();
+    //Dibuja el laberinto en la pantalla
+    
+    pistas = new ArrayList<Pista>();
     pistasImg = new PImage[6];
     for (int i = 0; i < 6; i++) {
       pistasImg[i] = parent.loadImage("pista" + (i + 1) + ".png");
     }
     initializePistas();
+    
+    wallColor1 = parent.color(255, 230, 238);
+    floorColor1 = parent.color(255, 179, 204);
+    wallColor2 = parent.color(140, 157, 173);
+    floorColor2 = parent.color(96, 59, 42);
   }
 
   void display() {
@@ -37,12 +50,15 @@ class Maze {
     int offsetX = (parent.width - maze[0].length * cellSize) / 2;
     int offsetY = (parent.height - maze.length * cellSize) / 2;
     
+    color currentWallColor = (currentMaze == 0) ? wallColor1 : wallColor2;
+    color currentFloorColor = (currentMaze == 0) ? floorColor1 : floorColor2;
+    
     for (int row = 0; row < maze.length; row++) {
       for (int col = 0; col < maze[row].length; col++) {
         if (maze[row][col] == 1) {
-          parent.fill(140, 157, 173);
+          parent.fill(currentWallColor);
         } else {
-          parent.fill(96, 59, 42);
+          parent.fill(currentFloorColor);
         }
         parent.rect(col * cellSize + offsetX, row * cellSize + offsetY, cellSize, cellSize);
       }
@@ -51,9 +67,8 @@ class Maze {
     parent.fill(0, 0, 128, 127);
     parent.rect(0, 0, parent.width, parent.height);
     
-    for (int i = 0; i < pistas.size(); i++) {
-      PVector pista = pistas.get(i);
-      parent.image(pistasImg[i], pista.x + offsetX, pista.y + offsetY, cellSize / 2, cellSize / 2);
+    for (Pista pista : pistas) {
+      pista.display();
     }
   }
 
@@ -62,11 +77,14 @@ class Maze {
     int offsetY = (parent.height - maze.length * cellSize) / 2;
     
     for (int i = pistas.size() - 1; i >= 0; i--) {
-      PVector pista = pistas.get(i);
+      Pista pista = pistas.get(i);
       if (PApplet.dist(player.x + cellSize / 2 + offsetX, player.y + cellSize / 2 + offsetY,
                       pista.x + cellSize / 4 + offsetX, pista.y + cellSize / 4 + offsetY) < cellSize / 2) {
         pistas.remove(i);
+        game.entities.remove(pista);
         player.pistasRecolectadas++;
+        //Verifica si el jugador ha recogido alguna pista
+        //@param player El jugador actual
       }
     }
   }
@@ -103,12 +121,17 @@ class Maze {
         }
         game.soundManager.stopGameMusic();
         game.soundManager.playFinalMusic(game.estadoActual);
+        //Verifica si el jugador ha completado el laberinto actual
+        //@param player El jugador actual
       }
     }
   }
 
   void initializePistas() {
     pistas.clear();
+    if (game != null && game.entities != null) {
+    game.entities.removeAll(pistas);
+}
     ArrayList<PVector> validPositions = new ArrayList<PVector>();
     for (int row = 0; row < maze.length; row++) {
       for (int col = 0; col < maze[row].length; col++) {
@@ -117,14 +140,22 @@ class Maze {
         }
       }
     }
-    int numPistas = 3;
+    int numPistas = 3; // Siempre 3 pistas por laberinto
     for (int i = 0; i < numPistas; i++) {
       if (validPositions.size() > 0) {
         int index = (int)parent.random(validPositions.size());
-        pistas.add(validPositions.remove(index));
+        PVector pos = validPositions.remove(index);
+        Pista newPista = new Pista(parent, (int)pos.x, (int)pos.y, pistasImg[i + (currentMaze * 3)]);
+        pistas.add(newPista);
+        if (game != null && game.entities != null) {
+          game.entities.add(newPista);
+        } else {
+          System.out.println("Error: game or game.entities is null");
+        }
       } else {
         System.out.println("No hay suficientes posiciones válidas para las pistas.");
         break;
+        //Inicializa las pistas en el laberinto
       }
     }
   }

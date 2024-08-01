@@ -1,3 +1,4 @@
+//Clase que maneja los efectos de sonido y musica del juego
 class SoundManager {
   PApplet parent; 
   SoundFile musicaCarga; 
@@ -7,9 +8,11 @@ class SoundManager {
   SoundFile final2Music; 
   SoundFile final3Music;
   SoundFile currentFinalMusic;
+  //Constructor de SoundManager
+  //@param parent La instancia de PApplet principal
 
   SoundManager(PApplet parent) {
-    this.parent = parent; // Inicializa la referencia al objeto PApplet principal
+    this.parent = parent;
     musicaCarga = new SoundFile(parent, "musica_carga.mp3"); 
     musicaCinematica = new SoundFile(parent, "musica_cinematica.mp3"); 
     gameMusic = new SoundFile(parent, "puzzle.wav"); 
@@ -19,55 +22,54 @@ class SoundManager {
   }
 
   void playMusicaCarga() {
-    musicaCarga.loop(); // Reproduce en bucle la música de carga
+    musicaCarga.loop();
+    //Reproduce la musica de carga
   }
 
   void stopMusicaCarga() {
-    musicaCarga.stop(); // Detiene la música de carga
+    musicaCarga.stop();
   }
 
   void playMusicaCinematica() {
-    musicaCinematica.loop(); // Reproduce en bucle la música de la cinemática
+    musicaCinematica.loop();
   }
 
   void stopMusicaCinematica() {
-    musicaCinematica.stop(); // Detiene la música de la cinemática
+    musicaCinematica.stop();
   }
 
   void playGameMusic() {
-    gameMusic.loop(); // Reproduce en bucle la música del juego
+    gameMusic.loop();
   }
 
   void stopGameMusic() {
-    gameMusic.stop(); // Detiene la música del juego
+    gameMusic.stop();
   }
 
-void playFinalMusic(Estado estado) {
-  stopAllMusic(); // Detiene todas las músicas
-  switch (estado) {
-    case CINEMATICA:
-      // No reproducir música para la cinemática
-      currentFinalMusic = null;
-      break;
-    case FINAL1:
-      currentFinalMusic = final1Music;
-      break;
-    case FINAL2:
-      currentFinalMusic = final2Music;
-      break;
-    case FINAL3:
-      currentFinalMusic = final3Music;
-      break;
-    default:
-      // Manejar otros estados si es necesario
-      currentFinalMusic = null;
-      break;
-  }
+  void playFinalMusic(Estado estado) {
+    stopAllMusic();
+    switch (estado) {
+      case CINEMATICA:
+        currentFinalMusic = null;
+        break;
+      case FINAL1:
+        currentFinalMusic = final1Music;
+        break;
+      case FINAL2:
+        currentFinalMusic = final2Music;
+        break;
+      case FINAL3:
+        currentFinalMusic = final3Music;
+        break;
+      default:
+        currentFinalMusic = null;
+        break;
+    }
 
-  if (currentFinalMusic != null) {
-    currentFinalMusic.loop();
+    if (currentFinalMusic != null) {
+      currentFinalMusic.loop();
+    }
   }
-}
 
   void stopAllMusic() {
     musicaCarga.stop(); 
@@ -76,6 +78,6 @@ void playFinalMusic(Estado estado) {
     final1Music.stop(); 
     final2Music.stop(); 
     final3Music.stop(); 
+    //Detiene toda la musica 
   }
-
- }
+}

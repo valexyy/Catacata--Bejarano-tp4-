@@ -1,4 +1,4 @@
-// Definición del enumerado Estado que representa los diferentes estados del juego
+//Enumeración que representa los diferentes estados del juego
 enum Estado {
   MOSTRANDO_IMAGEN1,
   MOSTRANDO_MENSAJE1,

@@ -8,11 +8,11 @@ class Maze {
   int currentMaze;
   color wallColor1, floorColor1;
   color wallColor2, floorColor2;
-//Constructor de la clase Maze
-//Inicializa el laberinto y las pistas
-//@param parent La instancia de PApplet principal
-//@param game La instancia del juego actual 
 
+  // Constructor de la clase Maze
+  // Inicializa el laberinto y las pistas
+  // @param parent La instancia de PApplet principal
+  // @param game La instancia del juego actual 
   Maze(PApplet parent, Game game) {
     this.parent = parent;
     this.game = game;
@@ -30,7 +30,6 @@ class Maze {
       {1, 1, 0, 1, 0, 0, 0, 1, 0, 1},
       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
-    //Dibuja el laberinto en la pantalla
     
     pistas = new ArrayList<Pista>();
     pistasImg = new PImage[6];
@@ -45,6 +44,7 @@ class Maze {
     floorColor2 = parent.color(96, 59, 42);
   }
 
+  // Dibuja el laberinto en la pantalla
   void display() {
     parent.background(255);
     int offsetX = (parent.width - maze[0].length * cellSize) / 2;
@@ -72,6 +72,8 @@ class Maze {
     }
   }
 
+  // Verifica si el jugador ha recogido alguna pista
+  // @param player El jugador actual
   void checkPistasCollection(Player player) {
     int offsetX = (parent.width - maze[0].length * cellSize) / 2;
     int offsetY = (parent.height - maze.length * cellSize) / 2;
@@ -83,12 +85,12 @@ class Maze {
         pistas.remove(i);
         game.entities.remove(pista);
         player.pistasRecolectadas++;
-        //Verifica si el jugador ha recogido alguna pista
-        //@param player El jugador actual
       }
     }
   }
 
+  // Verifica si el jugador ha completado el laberinto actual
+  // @param player El jugador actual
   void checkMazeCompletion(Player player) {
     if (player.x / cellSize == maze[0].length - 2 && player.y / cellSize == maze.length - 2) {
       if (currentMaze == 0) {
@@ -107,11 +109,20 @@ class Maze {
         player.x = 50;
         player.y = 50;
         currentMaze = 1;
+        
+        // Limpia las pistas existentes
+        for (Pista pista : pistas) {
+          game.entities.remove(pista);
+        }
         pistas.clear();
+        
+        // Inicializa las nuevas pistas
         initializePistas();
+        
         game.showingIntro = true;
         game.introScreen.start("2da Habitación");
       } else {
+        // Lógica para determinar el final basado en el total de pistas recolectadas
         if (player.pistasRecolectadas == 6) {
           game.estadoActual = Estado.FINAL3;
         } else if (player.pistasRecolectadas >= 3) {
@@ -121,17 +132,21 @@ class Maze {
         }
         game.soundManager.stopGameMusic();
         game.soundManager.playFinalMusic(game.estadoActual);
-        //Verifica si el jugador ha completado el laberinto actual
-        //@param player El jugador actual
+        
+        // Imprimir información de depuración
+        System.out.println("Pistas recolectadas: " + player.pistasRecolectadas);
+        System.out.println("Estado final: " + game.estadoActual);
       }
     }
   }
 
+  // Inicializa las pistas en el laberinto
   void initializePistas() {
     pistas.clear();
     if (game != null && game.entities != null) {
-    game.entities.removeAll(pistas);
-}
+      game.entities.removeAll(pistas);
+    }
+    
     ArrayList<PVector> validPositions = new ArrayList<PVector>();
     for (int row = 0; row < maze.length; row++) {
       for (int col = 0; col < maze[row].length; col++) {
@@ -140,6 +155,7 @@ class Maze {
         }
       }
     }
+    
     int numPistas = 3; // Siempre 3 pistas por laberinto
     for (int i = 0; i < numPistas; i++) {
       if (validPositions.size() > 0) {
@@ -155,7 +171,6 @@ class Maze {
       } else {
         System.out.println("No hay suficientes posiciones válidas para las pistas.");
         break;
-        //Inicializa las pistas en el laberinto
       }
     }
   }
